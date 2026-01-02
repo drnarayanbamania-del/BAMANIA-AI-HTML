@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bamania AI – Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import {
+      getAuth,
+      GoogleAuthProvider,
+      signInWithRedirect,
+      getRedirectResult
+    } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+    // 🔑 Firebase Config (tumhara)
+    const firebaseConfig = {
+      apiKey: "AIzaSyBl12az1gQpxM3lObk9DH7iqSGsHDLb5jM",
+      authDomain: "bamania-ai-0-3.firebaseapp.com",
+      projectId: "bamania-ai-0-3",
+      storageBucket: "bamania-ai-0-3.firebasestorage.app",
+      messagingSenderId: "41766120360",
+      appId: "1:41766120360:web:98516eccfbba9a8b854b9d"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    // ✅ Redirect ke baad result handle
+    getRedirectResult(auth)
+      .then((result) => {
+        if (result && result.user) {
+          window.location.href = "dashboard.html";
+        }
+      })
+      .catch((error) => {
+        alert("Login Error: " + error.message);
+      });
+
+    // ✅ Login function
+    window.loginWithGoogle = function () {
+      signInWithRedirect(auth, provider);
+    };
+  </script>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #020617;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+    .box {
+      background: rgba(255,255,255,0.06);
+      padding: 30px;
+      border-radius: 14px;
+      text-align: center;
+      width: 320px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="box">
+    <h2>BAMANIA AI</h2>
+    <p>Login with Google</p>
+    <button onclick="loginWithGoogle()">Login with Google</button>
+  </div>
+
+</body>
+</html>
